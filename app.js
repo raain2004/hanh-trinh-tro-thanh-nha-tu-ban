@@ -177,6 +177,7 @@ const feedbackReward = document.getElementById("feedback-reward");
 const feedbackTotal = document.getElementById("feedback-total");
 const nextTurnBtn = document.getElementById("next-turn-btn");
 const finalResultEl = document.getElementById("final-result");
+const restartBtn = document.getElementById("restart-btn");
 const difficultyButtons = [...document.querySelectorAll("[data-difficulty]")];
 const bgMusic = document.getElementById("bg-music");
 const musicToggle = document.getElementById("music-toggle");
@@ -196,6 +197,7 @@ musicToggle.addEventListener("click", () => {
 startBtn.addEventListener("click", showInstructions);
 enterGameBtn.addEventListener("click", startGame);
 nextTurnBtn.addEventListener("click", onNextTurn);
+restartBtn.addEventListener("click", restartGame);
 
 function onNextTurn() {
   feedbackBox.classList.add("hidden");
@@ -235,6 +237,13 @@ function startGame() {
   appendLog(`Người chơi: ${game.players[0].name}.`);
   applyCatchupSupportIfNeeded();
   refreshUI();
+}
+
+function restartGame() {
+  resultSection.classList.add("hidden");
+  setupSection.classList.remove("hidden");
+  document.body.classList.remove("game-started");
+  // Music is already handled by startBtn in showInstructions if needed
 }
 
 function pickDifficulty(difficulty) {
