@@ -348,9 +348,8 @@ function goNextPlayer() {
 
 function refreshUI() {
   if (game.ended) {
-    turnTitle.textContent = "Đã kết thúc";
-    playerAssetEl.textContent = "";
-    disableDifficultyButtons(true);
+    gameSection.classList.add("hidden");
+    resultSection.classList.remove("hidden");
   } else {
     turnTitle.textContent = `Lượt ${game.currentTurn} / ${TOTAL_TURNS}`;
     const player = getCurrentPlayer();
