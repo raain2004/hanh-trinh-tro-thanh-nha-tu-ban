@@ -240,23 +240,7 @@ function startGame() {
 }
 
 function restartGame() {
-  // Ẩn tất cả các section hiện tại
-  resultSection.classList.add("hidden");
-  gameSection.classList.add("hidden");
-  instructionsSection.classList.add("hidden");
-  feedbackBox.classList.add("hidden");
-  questionBox.classList.add("hidden");
-
-  // Hiển thị lại màn hình khởi đầu
-  setupSection.classList.remove("hidden");
-  document.body.classList.remove("game-started");
-
-  // Reset trạng thái game
-  game.ended = false;
-  game.currentTurn = 1;
-  game.usedQuestionNumbers = [];
-  
-  refreshUI();
+  window.location.reload();
 }
 
 function pickDifficulty(difficulty) {
