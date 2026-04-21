@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hành Trình Trở Thành Nhà Tư Bản</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section id="setup-section" class="card setup-overlay">
+        <button id="start-btn">Bắt đầu game</button>
+      </section>
+
+      <section id="game-section" class="card hidden">
+        <div class="turn-header">
+          <h2 id="turn-title">Lượt 1 / 10</h2>
+          <p id="current-player"></p>
+        </div>
+
+        <div class="difficulty-actions">
+          <button data-difficulty="easy">Chọn Dễ (1 sao)</button>
+          <button data-difficulty="medium">Chọn Trung Bình (2 sao)</button>
+          <button data-difficulty="hard">Chọn Khó (3 sao)</button>
+        </div>
+
+        <div id="question-box" class="question-box hidden">
+          <h3 id="question-title"></h3>
+          <p id="question-text"></p>
+          <div id="answer-options" class="answer-options"></div>
+        </div>
+
+        <div id="log" class="log"></div>
+      </section>
+
+      <section id="result-section" class="card hidden">
+        <h2>Kết quả cuối game</h2>
+        <div id="final-result"></div>
+      </section>
+    </main>
+
+    <script src="./app.js"></script>
+  </body>
+</html>
