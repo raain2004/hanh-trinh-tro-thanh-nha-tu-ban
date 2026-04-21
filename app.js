@@ -446,17 +446,45 @@ function parseQuestion(rawQuestion) {
   if (!match) return null;
 
   const questionNumber = Number(match[2]);
+  const originalOptions = {
+    A: match[3].trim(),
+    B: match[4].trim(),
+    C: match[5].trim(),
+    D: match[6].trim(),
+  };
+  
+  const correctLabel = ANSWER_KEY[questionNumber];
+  const correctText = originalOptions[correctLabel];
+
+  // Đảo thứ tự các đáp án
+  const optionTexts = Object.values(originalOptions);
+  shuffleArray(optionTexts);
+
+  const shuffledOptions = {};
+  let newCorrectAnswer = "";
+  const labels = ["A", "B", "C", "D"];
+
+  optionTexts.forEach((text, index) => {
+    const label = labels[index];
+    shuffledOptions[label] = text;
+    if (text === correctText) {
+      newCorrectAnswer = label;
+    }
+  });
+
   return {
     number: questionNumber,
     questionText: match[1].replace(/^Câu\s+\d+\.\s*/u, "").trim(),
-    options: {
-      A: match[3].trim(),
-      B: match[4].trim(),
-      C: match[5].trim(),
-      D: match[6].trim(),
-    },
-    correctAnswer: ANSWER_KEY[questionNumber],
+    options: shuffledOptions,
+    correctAnswer: newCorrectAnswer,
   };
+}
+
+function shuffleArray(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
 }
 
 function randomItem(arr) {
