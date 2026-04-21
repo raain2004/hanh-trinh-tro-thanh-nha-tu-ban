@@ -34,12 +34,7 @@ const ANSWER_KEY = {
 };
 
 const INITIAL_STATE = {
-  cash: 100,
-  workers: 2,
-  machines: 1,
-  factories: 1,
-  surplus: 0,
-  attacksUsed: 0,
+  cash: 50,
   hardChoices: 0,
   mediumCorrect: 0,
   easyCorrect: 0,
@@ -84,72 +79,37 @@ const difficultyQuestionSets = {
   ],
 };
 
-const rewardRules = {
-  1: {
-    easy: (p) => (p.cash += 50),
-    medium: (p) => (p.workers += 1),
-    hard: (p) => (p.surplus += 60),
-  },
-  2: {
-    easy: (p) => (p.cash += 20),
-    medium: (p) => (p.machines += 1),
-    hard: (p) => applyAttack(p, (opponent) => (opponent.cash = Math.max(0, opponent.cash - 20))),
-  },
-  3: {
-    easy: (p) => (p.surplus += 20),
-    medium: (p) => (p.cash += 40),
-    hard: (p) => (p.surplus += 80),
-  },
-  4: {
-    easy: (p) => (p.surplus += 30),
-    medium: (p) => (p.cash += 25),
-    hard: (p) => (p.machines += 1),
-  },
-  5: {
-    easy: (p) => (p.cash += 20),
-    medium: (p) => (p.surplus += 45),
-    hard: (p) => (p.surplus += 70),
-  },
-  6: {
-    easy: (p) => (p.cash += 60),
-    medium: (p) => (p.surplus += 20),
-    hard: (p) => applyAttack(p, (opponent) => (opponent.surplus = Math.max(0, opponent.surplus - 25))),
-  },
-  7: {
-    easy: (p) => (p.workers += 1),
-    medium: (p) => (p.surplus += 50),
-    hard: (p) => {
-      p.cash += 120;
-      p.surplus -= 40;
-    },
-  },
-  8: {
-    easy: (p) => (p.cash += 30),
-    medium: (p) => (p.surplus += 60),
-    hard: (p) => {
-      p.cash -= 20;
-      p.machines += 1;
-    },
-  },
-  9: {
-    easy: (p) => (p.cash += 80),
-    medium: (p) => (p.surplus += 70),
-    hard: (p) => applyAttack(p, (opponent) => (opponent.machines = Math.max(0, opponent.machines - 1))),
-  },
-  10: {
-    easy: (p) => (p.cash += 100),
-    medium: (p) => (p.machines += 1),
-    hard: (p) => (p.surplus *= 2),
-  },
-};
-
-const penalties = {
-  easy: (p) => (p.cash = Math.max(0, p.cash - 10)),
-  medium: (p) => {
-    if (p.cash >= 40) p.cash -= 40;
-    else p.workers = Math.max(0, p.workers - 1);
-  },
-  hard: (p) => (p.surplus = Math.floor(p.surplus / 2)),
+const QUESTION_EFFECTS = {
+  1: { correct: { amt: "+$5", act: p => p.cash += 5, st: "Hiểu điều kiện thị trường giúp bạn chọn đúng sân chơi." }, incorrect: { amt: "-$5", act: p => p.cash = Math.max(0, p.cash - 5), st: "Mù mờ về thị trường là bước đầu của phá sản." } },
+  2: { correct: { amt: "+$5", act: p => p.cash += 5, st: "Buffett nói: 'Giá là cái bạn trả, giá trị là cái bạn nhận'." }, incorrect: { amt: "-$5", act: p => p.cash = Math.max(0, p.cash - 5), st: "Nhầm lẫn giữa giá cả và giá trị là sai lầm chết người." } },
+  3: { correct: { amt: "+$6", act: p => p.cash += 6, st: "Bạn hiểu thước đo xã hội, không bị ảo tưởng bởi cái nhìn cá nhân." }, incorrect: { amt: "-$4", act: p => p.cash = Math.max(0, p.cash - 4), st: "Dùng thước đo sai sẽ định giá doanh nghiệp sai." } },
+  4: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Công thức T-H-T' chính là nền tảng của mọi đế chế tư bản." }, incorrect: { amt: "-$6", act: p => p.cash = Math.max(0, p.cash - 6), st: "Không hiểu cách tiền sinh ra tiền thì mãi làm thuê." } },
+  5: { correct: { amt: "+$5", act: p => p.cash += 5, st: "Biết 'm' (thặng dư) là mục tiêu của mọi nhà đầu tư." }, incorrect: { amt: "-$3", act: p => p.cash = Math.max(0, p.cash - 3), st: "Không biết lợi nhuận từ đâu thì không thể giữ được tiền." } },
+  6: { correct: { amt: "+$6", act: p => p.cash += 6, st: "Tư bản bất biến (c) là những cỗ máy giúp bạn rảnh tay." }, incorrect: { amt: "-$5", act: p => p.cash = Math.max(0, p.cash - 5), st: "Nhầm lẫn vai trò sản xuất làm rối loạn dòng vốn." } },
+  7: { correct: { amt: "+$7", act: p => p.cash += 7, st: "Kiểm soát chi phí (k) là cách Buffett bảo vệ túi tiền của mình." }, incorrect: { amt: "-$5", act: p => p.cash = Math.max(0, p.cash - 5), st: "Sai số về chi phí khiến lợi nhuận chỉ là con số ảo." } },
+  8: { correct: { amt: "+$6", act: p => p.cash += 6, st: "Hiểu phương pháp tạo thặng dư để tối ưu hóa nguồn lực." }, incorrect: { amt: "-$4", act: p => p.cash = Math.max(0, p.cash - 4), st: "Thiếu chiến lược sản xuất, doanh nghiệp sẽ dậm chân." } },
+  9: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn nhìn thấy thực chất của lợi nhuận sau lớp vỏ thị trường." }, incorrect: { amt: "-$6", act: p => p.cash = Math.max(0, p.cash - 6), st: "Bị đánh lừa bởi bề nổi, bạn sẽ mất tiền vào tay kẻ khác." } },
+  10: { correct: { amt: "+$10", act: p => p.cash += 10, st: "Thặng dư siêu ngạch chính là 'Moat' (Con hào kinh tế)." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Thiếu động lực cạnh tranh, bạn sẽ bị đào thải." } },
+  11: { correct: { amt: "+10% TS", act: p => p.cash += Math.floor(p.cash * 0.1), st: "Hiểu bản chất lao động giúp bạn định giá đúng con người." }, incorrect: { amt: "-10% TS", act: p => p.cash = Math.max(0, p.cash - Math.floor(p.cash * 0.1)), st: "Sai bản chất dẫn đến sai hệ thống tư duy." } },
+  12: { correct: { amt: "+$10", act: p => p.cash += 10, st: "Năng suất tăng, giá trị giảm – Buffett luôn chọn hàng rẻ giá trị cao." }, incorrect: { amt: "-$8", act: p => p.cash = Math.max(0, p.cash - 8), st: "Không hiểu quy luật năng suất sẽ mua đắt bán rẻ." } },
+  13: { correct: { amt: "+$12", act: p => p.cash += 12, st: "Tỷ suất m' cho thấy hiệu suất bóc lột (hiệu suất đầu tư)." }, incorrect: { amt: "-$10", act: p => p.cash = Math.max(0, p.cash - 10), st: "Đánh giá sai hiệu suất, vốn của bạn sẽ bị chôn vùi." } },
+  14: { correct: { amt: "+$15", act: p => p.cash += 15, st: "Tập trung tư bản giúp Berkshire Hathaway thành gã khổng lồ." }, incorrect: { amt: "-$12", act: p => p.cash = Math.max(0, p.cash - 12), st: "Nhầm lẫn quy mô khiến bạn đầu tư dàn trải." } },
+  15: { correct: { amt: "+$15", act: p => p.cash += 15, st: "Giá cả sản xuất là điểm tựa để bạn mua vào khi thị trường hoảng loạn." }, incorrect: { amt: "+$5", act: p => p.cash += 5, st: "Bạn vẫn có lãi nhưng bỏ lỡ cơ hội bứt phá." } },
+  16: { correct: { amt: "+$10", act: p => p.cash += 10, st: "Tiền là thước đo, đừng để cảm xúc làm thước đo thay đổi." }, incorrect: { amt: "-$10", act: p => p.cash = Math.max(0, p.cash - 10), st: "Thước đo sai làm hỏng mọi bảng cân đối kế toán." } },
+  17: { correct: { amt: "+$15", act: p => p.cash += 15, st: "'Thời gian là bạn của doanh nghiệp tuyệt vời' - Chu chuyển nhanh là tốt." }, incorrect: { amt: "-$12", act: p => p.cash = Math.max(0, p.cash - 12), st: "Chôn vốn quá lâu khiến tỷ suất lợi nhuận thảm hại." } },
+  18: { correct: { amt: "+$20", act: p => p.cash += 20, st: "Hiểu nguồn gốc lợi nhuận thương nghiệp để đầu tư vào bán lẻ." }, incorrect: { amt: "-$20", act: p => p.cash = Math.max(0, p.cash - 20), st: "Nghĩ rằng mua rẻ bán đắt là tất cả? Bạn quá ngây thơ." } },
+  19: { correct: { amt: "+$20", act: p => p.cash += 20, st: "Cạnh tranh tạo ra sự bình quân, hãy tìm nơi ít cạnh tranh nhất." }, incorrect: { amt: "+$0", act: p => p.cash += 0, st: "Bạn an toàn, nhưng cơ hội làm giàu đã vụt mất." } },
+  20: { correct: { amt: "+$25", act: p => p.cash += 25, st: "Lợi tức là phần thưởng cho người kiên nhẫn nắm giữ tiền." }, incorrect: { amt: "+$5", act: p => p.cash += 5, st: "Lợi nhuận mỏng manh không đủ bù lạm phát." } },
+  21: { correct: { amt: "+$25", act: p => p.cash += 25, st: "Tránh mâu thuẫn xã hội là cách bảo vệ doanh nghiệp bền vững." }, incorrect: { amt: "-$20", act: p => p.cash = Math.max(0, p.cash - 20), st: "Sản phẩm không phù hợp nhu cầu là rác thải tài chính." } },
+  22: { correct: { amt: "+$30", act: p => p.cash += 30, st: "Cường độ tăng nhưng giá trị đơn vị không đổi – hãy cẩn thận!" }, incorrect: { amt: "-$25", act: p => p.cash = Math.max(0, p.cash - 25), st: "Hiểu sai về giá trị làm bạn kiệt sức mà không giàu." } },
+  23: { correct: { amt: "+$30", act: p => p.cash += 30, st: "Buffett gọi phái sinh là 'vũ khí hủy diệt hàng loạt' (Tư bản giả)." }, incorrect: { amt: "-$25", act: p => p.cash = Math.max(0, p.cash - 25), st: "Say sưa với tư bản giả, bạn sẽ trắng tay khi bong bóng nổ." } },
+  24: { correct: { amt: "+$40", act: p => p.cash += 40, st: "Sức lao động là tài sản duy nhất tạo ra thêm giá trị." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Coi thường con người, hệ thống của bạn sẽ sụp đổ." } },
+  25: { correct: { amt: "+$40", act: p => p.cash += 40, st: "Định giá đúng chi phí tái tạo để giữ chân nhân tài." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Định giá sai con người khiến chi phí ẩn tăng cao." } },
+  26: { correct: { amt: "+$50", act: p => p.cash += 50, st: "Hiểu hao mòn để khấu hao chính xác như một chuyên gia tài chính." }, incorrect: { amt: "-$35", act: p => p.cash = Math.max(0, p.cash - 35), st: "Quản lý tài sản kém làm dòng tiền bị tắc nghẽn." } },
+  27: { correct: { amt: "+$70", act: p => p.cash += 70, st: "Địa tô tuyệt đối là dòng tiền ổn định từ bất động sản." }, incorrect: { amt: "-$50", act: p => p.cash = Math.max(0, p.cash - 50), st: "Đầu tư sai phân khúc đất đai, nợ nần bủa vây." } },
+  28: { correct: { amt: "+$30", act: p => p.cash += 30, st: "Cấu tạo hữu cơ (c/v) tăng là xu thế của AI và tự động hóa." }, incorrect: { amt: "-$25", act: p => p.cash = Math.max(0, p.cash - 25), st: "Lỗi thời về kỹ thuật là dấu chấm hết cho doanh nghiệp." } },
+  29: { correct: { amt: "+$100", act: p => p.cash += 100, st: "Thặng dư tương đối là cách làm giàu bền vững bằng công nghệ." }, incorrect: { amt: "-$50", act: p => p.cash = Math.max(0, p.cash - 50), st: "Chỉ biết ép sức lao động, bạn sẽ sớm bị đối thủ vượt mặt." } },
+  30: { correct: { amt: "x2 Tài sản", act: p => p.cash *= 2, st: "Hiểu bản chất tiền công, bạn đã tốt nghiệp trường đời." }, incorrect: { amt: "-50% TS", act: p => p.cash = Math.max(0, p.cash - Math.floor(p.cash * 0.5)), st: "Một sai lầm ở phút cuối khiến bạn mất trắng thành quả." } }
 };
 
 const game = {
@@ -162,20 +122,42 @@ const game = {
 };
 
 const setupSection = document.getElementById("setup-section");
+const instructionsSection = document.getElementById("instructions-section");
+const enterGameBtn = document.getElementById("enter-game-btn");
 const gameSection = document.getElementById("game-section");
 const resultSection = document.getElementById("result-section");
 const startBtn = document.getElementById("start-btn");
 const turnTitle = document.getElementById("turn-title");
-const currentPlayerEl = document.getElementById("current-player");
+const playerAssetEl = document.getElementById("player-asset");
 const questionBox = document.getElementById("question-box");
 const questionTitle = document.getElementById("question-title");
 const questionText = document.getElementById("question-text");
 const answerOptionsEl = document.getElementById("answer-options");
-const logEl = document.getElementById("log");
+const feedbackBox = document.getElementById("feedback-box");
+const feedbackTitle = document.getElementById("feedback-title");
+const feedbackMessage = document.getElementById("feedback-message");
+const feedbackReward = document.getElementById("feedback-reward");
+const feedbackTotal = document.getElementById("feedback-total");
+const nextTurnBtn = document.getElementById("next-turn-btn");
 const finalResultEl = document.getElementById("final-result");
 const difficultyButtons = [...document.querySelectorAll("[data-difficulty]")];
 
-startBtn.addEventListener("click", startGame);
+startBtn.addEventListener("click", showInstructions);
+enterGameBtn.addEventListener("click", startGame);
+nextTurnBtn.addEventListener("click", onNextTurn);
+
+function onNextTurn() {
+  feedbackBox.classList.add("hidden");
+  disableDifficultyButtons(false);
+  goNextPlayer();
+  refreshUI();
+}
+
+function showInstructions() {
+  setupSection.classList.add("hidden");
+  instructionsSection.classList.remove("hidden");
+  document.body.classList.add("game-started");
+}
 difficultyButtons.forEach((btn) => btn.addEventListener("click", () => pickDifficulty(btn.dataset.difficulty)));
 
 function startGame() {
@@ -187,9 +169,10 @@ function startGame() {
   game.ended = false;
 
   setupSection.classList.add("hidden");
+  instructionsSection.classList.add("hidden");
   gameSection.classList.remove("hidden");
   resultSection.classList.add("hidden");
-  logEl.innerHTML = "";
+  document.body.classList.add("game-started");
 
   appendLog("Bắt đầu game ở chế độ 1 người chơi.");
   appendLog(`Người chơi: ${game.players[0].name}.`);
@@ -231,25 +214,43 @@ function resolveAnswer(selectedOption) {
   if (difficulty === "medium" && isCorrect) player.mediumCorrect += 1;
   if (difficulty === "easy" && isCorrect) player.easyCorrect += 1;
 
+  let story = "";
+  let amountText = "";
+  const questionNum = game.pendingQuestion.number;
+  const effectData = QUESTION_EFFECTS[questionNum];
+
   if (isCorrect) {
-    rewardRules[game.currentTurn][difficulty](player);
-    appendLog(`${player.name} trả lời ĐÚNG (${difficulty}) ở lượt ${game.currentTurn}.`);
+    const outcome = effectData.correct;
+    story = outcome.st;
+    amountText = outcome.amt;
+    outcome.act(player);
+    
+    feedbackTitle.textContent = "✅ ĐÚNG!";
+    feedbackTitle.style.color = "#4ade80";
+    feedbackReward.textContent = `Thưởng: ${amountText}`;
+    feedbackReward.style.color = "#4ade80";
   } else {
-    penalties[difficulty](player);
-    appendLog(
-      `${player.name} trả lời SAI (${difficulty}) ở lượt ${game.currentTurn}. Đáp án đúng: ${correctAnswer}.`
-    );
+    const outcome = effectData.incorrect;
+    story = outcome.st;
+    amountText = outcome.amt;
+    outcome.act(player);
+
+    feedbackTitle.textContent = `❌ SAI! Đáp án đúng là ${correctAnswer}`;
+    feedbackTitle.style.color = "#ef4444";
+    feedbackReward.textContent = `Phạt: ${amountText}`;
+    feedbackReward.style.color = "#ef4444";
   }
+
+  feedbackMessage.textContent = `"${story}"`;
+  feedbackTotal.textContent = `Tài sản hiện tại: $${player.cash}`;
 
   normalizePlayerState(player);
   game.pendingDifficulty = null;
   game.pendingQuestion = null;
   questionBox.classList.add("hidden");
   answerOptionsEl.innerHTML = "";
-  disableDifficultyButtons(false);
-
-  goNextPlayer();
-  refreshUI();
+  
+  feedbackBox.classList.remove("hidden");
 }
 
 function goNextPlayer() {
@@ -257,7 +258,6 @@ function goNextPlayer() {
   if (isLastPlayerThisTurn) {
     game.currentPlayerIndex = 0;
     game.currentTurn += 1;
-    applyCatchupSupportIfNeeded();
   } else {
     game.currentPlayerIndex += 1;
   }
@@ -265,41 +265,20 @@ function goNextPlayer() {
   if (game.currentTurn > TOTAL_TURNS) {
     game.ended = true;
     renderFinalResults();
-    appendLog("Game đã kết thúc. Xem kết quả cuối game bên dưới.");
   }
-}
-
-function applyCatchupSupportIfNeeded() {
-  if (![6, 9].includes(game.currentTurn) || game.currentTurn > TOTAL_TURNS) return;
-  const sorted = getRanking();
-  const lastPlayer = sorted[sorted.length - 1];
-  lastPlayer.cash += 20;
-  appendLog(`Trợ cấp chống snowball: ${lastPlayer.name} nhận +20 tiền ở đầu lượt ${game.currentTurn}.`);
-}
-
-function applyAttack(currentPlayer, effect) {
-  if (currentPlayer.attacksUsed >= 2) {
-    currentPlayer.surplus += 20;
-    appendLog(`${currentPlayer.name} đã dùng hết 2 lần tấn công. Hệ thống chuyển thành +20 thặng dư.`);
-    return;
-  }
-  const candidates = game.players.filter((p) => p !== currentPlayer);
-  const target = [...candidates].sort((a, b) => getTotalAsset(b) - getTotalAsset(a))[0];
-  if (!target) return;
-  effect(target);
-  currentPlayer.attacksUsed += 1;
-  normalizePlayerState(target);
-  appendLog(`${currentPlayer.name} kích hoạt hiệu ứng ảnh hưởng đến ${target.name}.`);
 }
 
 function refreshUI() {
   if (game.ended) {
     turnTitle.textContent = "Đã kết thúc";
-    currentPlayerEl.textContent = "";
+    playerAssetEl.textContent = "";
     disableDifficultyButtons(true);
   } else {
     turnTitle.textContent = `Lượt ${game.currentTurn} / ${TOTAL_TURNS}`;
-    currentPlayerEl.textContent = `Lượt hiện tại: ${getCurrentPlayer().name}`;
+    const player = getCurrentPlayer();
+    if (player) {
+      playerAssetEl.textContent = `Tài sản: $${player.cash}`;
+    }
   }
 }
 
@@ -307,46 +286,38 @@ function renderFinalResults() {
   resultSection.classList.remove("hidden");
   const ranking = getRanking();
   const winner = ranking[0];
+  const rankData = getTitleAndQuote(winner.cash);
+
   finalResultEl.innerHTML = `
-    <p><strong>Quán quân:</strong> ${winner.name} - ${getTotalAsset(winner)} điểm tài sản.</p>
-    <p><strong>Danh hiệu:</strong></p>
-    <ul>
-      ${ranking
-        .map((player, idx) => `<li>${player.name}: ${mainTitleByRank(idx + 1)}</li>`)
-        .join("")}
-    </ul>
+    <h3 style="color: #f3d8ac; text-align: center; margin-bottom: 20px; text-transform: uppercase;">BẢNG PHONG THÁNH TÀI CHÍNH</h3>
+    <div style="background: rgba(0,0,0,0.5); padding: 20px; border-radius: 10px; text-align: center; border: 1px solid #f3d8ac;">
+      <p style="font-size: 1.2em; margin-bottom: 10px;">Tài sản thực: <strong style="color: #4ade80;">$${winner.cash}</strong></p>
+      <p style="font-size: 1.6em; font-weight: bold; color: #fbbf24; margin-bottom: 15px;">${rankData.title}</p>
+      <p style="font-style: italic; color: #e5e7eb; line-height: 1.6; font-size: 1.1em;">"${rankData.quote}"</p>
+    </div>
   `;
 }
 
 function getRanking() {
-  return [...game.players].sort((a, b) => {
-    const totalDiff = getTotalAsset(b) - getTotalAsset(a);
-    if (totalDiff !== 0) return totalDiff;
-    const surplusDiff = b.surplus - a.surplus;
-    if (surplusDiff !== 0) return surplusDiff;
-    return b.factories - a.factories;
-  });
+  return [...game.players].sort((a, b) => b.cash - a.cash);
 }
 
 function getTotalAsset(player) {
-  const machineValue = player.machines * 50;
-  const factoryValue = player.factories * 80;
-  return player.cash + machineValue + factoryValue + player.surplus;
+  return player.cash;
 }
 
-function mainTitleByRank(rank) {
-  if (rank === 1) return "Đại Tư Bản Công Nghiệp";
-  if (rank === 2) return "Nhà Tư Bản Tăng Trưởng";
-  if (rank === 3) return "Nhà Tư Bản Tiềm Năng";
-  return "Nhà Khởi Nghiệp Kiên Cường";
+function getTitleAndQuote(cash) {
+  if (cash < 50) return { title: "🤡 Cái Bang Công Nghệ", quote: "Vốn 50 đô mà còn lỗ thì tốt nhất bạn nên mang tiền đi gửi tiết kiệm... à mà quên, bạn làm gì còn tiền!" };
+  if (cash < 150) return { title: "🐣 F0 Ngây Thơ", quote: "Cũng có tí kiến thức đấy, nhưng ra thị trường chắc trụ được 5 giây trước khi bị cá mập nó nuốt chửng." };
+  if (cash < 400) return { title: "👔 Chuyên Gia 'Mõm'", quote: "Nói về lý thuyết thì hay lắm, nhưng tài khoản thì vẫn chưa đủ mua cái bánh xe của chiếc Rolls-Royce tôi đang đi." };
+  if (cash < 700) return { title: "🦈 Cá Mập Ao Làng", quote: "Khá đấy! Bạn bắt đầu biết cách 'bóc lột' thặng dư rồi. Đủ tiền mua vài cái thẻ nạp n8n để chạy bot StayJoy rồi đó." };
+  if (cash < 1000) return { title: "👑 Quý Tộc Mới Nổi", quote: "Hơi bị ra gì rồi đấy! Giờ đi đâu cũng có thể vỗ ngực tự xưng là nhà đầu tư chiến lược mà không sợ bị cười vào mặt." };
+  if (cash < 2000) return { title: "💼 Đệ Tử Ruột Buffett", quote: "Chào người anh em! Có muốn ngồi chung xe điện với tôi không? Tầm này thì kiến thức kinh tế của bạn đã thoát xác rồi." };
+  return { title: "🏆 Huyền Thoại Omaha", quote: "Tránh ra cho người giàu đi! Bạn không chỉ hiểu tư bản, bạn chính là tư bản. Giờ thì ngồi xuống và nghe tiền nó tự đẻ ra tiền đi!" };
 }
 
 function normalizePlayerState(player) {
   player.cash = Math.max(0, Math.floor(player.cash));
-  player.workers = Math.max(0, Math.floor(player.workers));
-  player.machines = Math.max(0, Math.floor(player.machines));
-  player.factories = Math.max(0, Math.floor(player.factories));
-  player.surplus = Math.max(0, Math.floor(player.surplus));
 }
 
 function getCurrentPlayer() {
@@ -354,9 +325,7 @@ function getCurrentPlayer() {
 }
 
 function appendLog(message) {
-  const p = document.createElement("p");
-  p.textContent = `- ${message}`;
-  logEl.prepend(p);
+  // Log feature disabled.
 }
 
 function disableDifficultyButtons(isDisabled) {

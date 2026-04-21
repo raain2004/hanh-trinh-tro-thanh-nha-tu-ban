@@ -9,13 +9,28 @@
   <body>
     <main class="container">
       <section id="setup-section" class="card setup-overlay">
-        <button id="start-btn">Bắt đầu game</button>
+        <button id="start-btn">Bắt đầu hành trình</button>
+      </section>
+
+      <section id="instructions-section" class="card hidden">
+        <h2 style="margin-top: 0; color: #f3d8ac;">Quy Tắc Đầu Tư (Warren Buffett Style)</h2>
+        <div class="instructions-content" style="color: #f7ecd8; line-height: 1.5; margin-bottom: 20px;">
+          <p>Bạn sẽ vào vai một nhà đầu tư xây dựng cơ đồ trong 10 lượt. Vốn khởi điểm: <strong>$50</strong>.</p>
+          <p><strong>Mục tiêu:</strong> Tối đa hóa Tài Sản sau 10 lượt.</p>
+          <p><strong>Cách chơi:</strong></p>
+          <ul style="padding-left: 20px;">
+            <li><strong>Mức Dễ:</strong> Thưởng nhỏ (+$5~$10), phạt nhẹ (-$3~$7). Xây dựng thói quen và nền tảng.</li>
+            <li><strong>Mức Trung Bình:</strong> Thưởng khá (+10% hoặc +$10~$25), phạt đau (-10% hoặc -$10~$20). Thử thách quyết định đầu tư.</li>
+            <li><strong>Mức Khó:</strong> Thưởng đột phá (có thể <strong>x2 Tài Sản</strong>), phạt sinh tử (mất <strong>50% Tài Sản</strong>). Quyết định lớn thay đổi cuộc đời!</li>
+          </ul>
+        </div>
+        <button id="enter-game-btn">Đã hiểu, vào game!</button>
       </section>
 
       <section id="game-section" class="card hidden">
-        <div class="turn-header">
-          <h2 id="turn-title">Lượt 1 / 10</h2>
-          <p id="current-player"></p>
+        <div class="turn-header" style="display: flex; justify-content: space-between; align-items: center;">
+          <h2 id="turn-title" style="margin: 0;">Lượt 1 / 10</h2>
+          <div id="player-asset" style="font-size: 18px; font-weight: bold; color: #4ade80; background: rgba(0,0,0,0.4); padding: 5px 12px; border-radius: 8px; border: 1px solid #22c55e;">Tài sản: $50</div>
         </div>
 
         <div class="difficulty-actions">
@@ -30,7 +45,15 @@
           <div id="answer-options" class="answer-options"></div>
         </div>
 
-        <div id="log" class="log"></div>
+        <div id="feedback-box" class="feedback-box hidden" style="margin-top: 14px; padding: 16px; border: 1px solid rgba(241, 200, 145, 0.4); border-radius: 10px; background: rgba(30, 10, 8, 0.8);">
+          <h3 id="feedback-title" style="margin-top: 0;"></h3>
+          <p id="feedback-message" style="font-style: italic; font-size: 1.1em; color: #f3d8ac; margin-bottom: 15px;"></p>
+          <div class="feedback-stats" style="background: rgba(0,0,0,0.5); padding: 12px; border-radius: 8px; margin-bottom: 15px;">
+            <p id="feedback-reward" style="margin: 5px 0; font-size: 18px; font-weight: bold;"></p>
+            <p id="feedback-total" style="margin: 5px 0; color: #e5e7eb; font-size: 16px;"></p>
+          </div>
+          <button id="next-turn-btn" style="width: 100%; padding: 12px; font-size: 16px;">Tiếp tục</button>
+        </div>
       </section>
 
       <section id="result-section" class="card hidden">
