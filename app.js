@@ -361,6 +361,7 @@ function refreshUI() {
 }
 
 function renderFinalResults() {
+  gameSection.classList.add("hidden");
   resultSection.classList.remove("hidden");
   const ranking = getRanking();
   const winner = ranking[0];
