@@ -7,6 +7,8 @@
     <link rel="stylesheet" href="./styles.css" />
   </head>
   <body>
+    <audio id="bg-music" src="bg_music.mp3" loop></audio>
+    <button id="music-toggle" class="music-btn" title="Bật/Tắt nhạc">🎵</button>
     <main class="container">
       <section id="setup-section" class="card setup-overlay">
         <button id="start-btn">Bắt đầu hành trình</button>
@@ -14,15 +16,21 @@
 
       <section id="instructions-section" class="card hidden">
         <h2 style="margin-top: 0; color: #f3d8ac;">Quy Tắc Đầu Tư (Warren Buffett Style)</h2>
-        <div class="instructions-content" style="color: #f7ecd8; line-height: 1.5; margin-bottom: 20px;">
-          <p>Bạn sẽ vào vai một nhà đầu tư xây dựng cơ đồ trong 10 lượt. Vốn khởi điểm: <strong>$50</strong>.</p>
-          <p><strong>Mục tiêu:</strong> Tối đa hóa Tài Sản sau 10 lượt.</p>
-          <p><strong>Cách chơi:</strong></p>
-          <ul style="padding-left: 20px;">
-            <li><strong>Mức Dễ:</strong> Thưởng nhỏ (+$5~$10), phạt nhẹ (-$3~$7). Xây dựng thói quen và nền tảng.</li>
-            <li><strong>Mức Trung Bình:</strong> Thưởng khá (+10% hoặc +$10~$25), phạt đau (-10% hoặc -$10~$20). Thử thách quyết định đầu tư.</li>
-            <li><strong>Mức Khó:</strong> Thưởng đột phá (có thể <strong>x2 Tài Sản</strong>), phạt sinh tử (mất <strong>50% Tài Sản</strong>). Quyết định lớn thay đổi cuộc đời!</li>
+        <div class="instructions-content" style="color: #f7ecd8; line-height: 1.6; margin-bottom: 20px;">
+          <p>Chào mừng bạn đến với <strong>Hành Trình Trở Thành Nhà Tư Bản</strong>. Hãy vận dụng tư duy kinh tế để xây dựng đế chế của riêng mình.</p>
+          <ul style="padding-left: 20px; margin-top: 10px;">
+            <li><strong>Vốn khởi điểm:</strong> Bạn bắt đầu với <strong>$50</strong> trong tay.</li>
+            <li><strong>Thời gian:</strong> Bạn có <strong>10 lượt</strong> để chứng minh bản lĩnh đầu tư.</li>
+            <li><strong>Chiến lược phân tầng:</strong>
+              <ul style="margin-top: 5px; opacity: 0.9;">
+                <li>🟢 <strong>Dễ:</strong> Thưởng <strong>+$8</strong> | Phạt <strong>-$7</strong>. (Nền tảng vững chắc)</li>
+                <li>🟡 <strong>Trung bình:</strong> Thưởng <strong>+$18</strong> | Phạt <strong>-$16</strong>. (Tăng trưởng bứt phá)</li>
+                <li>🔴 <strong>Khó:</strong> Thưởng <strong>+$38</strong> | Phạt <strong>-$30</strong>. (Đẳng cấp tư bản)</li>
+              </ul>
+            </li>
+            <li><strong>Kỷ luật:</strong> Không có câu hỏi nào bị trùng lặp. Mỗi sai lầm đều phải trả giá bằng tiền mặt!</li>
           </ul>
+          <p style="text-align: center; color: #fbbf24; font-weight: bold; margin-top: 15px;">Mục tiêu: Đạt danh hiệu cao nhất trên Bảng Phong Thánh Tài Chính!</p>
         </div>
         <button id="enter-game-btn">Đã hiểu, vào game!</button>
       </section>

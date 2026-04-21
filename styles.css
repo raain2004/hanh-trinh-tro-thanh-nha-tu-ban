@@ -31,6 +31,35 @@ body.game-started::before {
   padding: 18px 16px 52px;
 }
 
+.music-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(120, 45, 35, 0.8);
+  border: 1px solid rgba(240, 201, 153, 0.4);
+  color: white;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+}
+
+.music-btn:hover {
+  transform: scale(1.1);
+  background: rgba(120, 45, 35, 1);
+}
+
+.music-btn.muted {
+  opacity: 0.6;
+}
+
 .card {
   background: linear-gradient(180deg, rgba(120, 45, 35, 0.86) 0%, rgba(76, 24, 18, 0.92) 100%);
   border: 1px solid rgba(240, 201, 153, 0.3);

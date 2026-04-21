@@ -1,36 +1,12 @@
 const TOTAL_TURNS = 10;
 const SOLO_PLAYER_NAME = "Người chơi";
 const ANSWER_KEY = {
-  1: "B",
-  2: "C",
-  3: "B",
-  4: "C",
-  5: "D",
-  6: "B",
-  7: "C",
-  8: "A",
-  9: "B",
-  10: "C",
-  11: "B",
-  12: "B",
-  13: "B",
-  14: "C",
-  15: "C",
-  16: "D",
-  17: "A",
-  18: "B",
-  19: "C",
-  20: "B",
-  21: "B",
-  22: "C",
-  23: "C",
-  24: "B",
-  25: "B",
-  26: "B",
-  27: "C",
-  28: "A",
-  29: "C",
-  30: "B",
+  1: "B", 2: "C", 3: "C", 4: "B", 5: "B", 6: "B", 7: "B", 8: "C", 9: "B", 10: "B",
+  11: "B", 12: "B", 13: "B", 14: "B", 15: "C", 16: "B", 17: "B", 18: "A", 19: "B", 20: "C",
+  21: "D", 22: "C", 23: "A", 24: "B", 25: "C", 26: "B", 27: "B", 28: "B", 29: "B", 30: "C",
+  31: "B", 32: "B", 33: "B", 34: "B", 35: "B", 36: "B", 37: "B", 38: "A", 39: "B", 40: "B",
+  41: "B", 42: "B", 43: "B", 44: "B", 45: "B", 46: "B", 47: "B", 48: "A", 49: "B", 50: "B",
+  51: "B", 52: "B", 53: "B", 54: "B", 55: "B", 56: "C", 57: "B", 58: "B", 59: "B", 60: "B",
 };
 
 const INITIAL_STATE = {
@@ -42,74 +18,134 @@ const INITIAL_STATE = {
 
 const difficultyQuestionSets = {
   easy: [
-    "Câu 1. Nền kinh tế hàng hóa có thể hình thành và phát triển khi có đủ bao nhiêu điều kiện? A. 1 B. 2 C. 3 D. 4",
-    "Câu 2. Hai thuộc tính cơ bản của hàng hóa là gì? A. Giá trị và Giá trị trao đổi B. Giá trị sử dụng và Giá cả C. Giá trị sử dụng và Giá trị D. Giá trị thặng dư và Lợi nhuận",
-    "Câu 3. Lượng giá trị của hàng hóa được đo lường bằng thước đo nào? A. Thời gian lao động cá biệt B. Thời gian lao động xã hội cần thiết C. Thời gian hao mòn máy móc D. Thời gian lưu thông trên thị trường",
-    "Câu 4. Công thức chung của tư bản là gì? A. H - T - H B. T - H - T C. T - H - T' (với T' = T + t, t > 0) D. H - T - H'",
-    "Câu 5. Ký hiệu của Giá trị thặng dư trong kinh tế chính trị Mác - Lênin là gì? A. k B. v C. c D. m",
-    "Câu 6. Bộ phận tư bản tồn tại dưới hình thái tư liệu sản xuất (máy móc, nguyên nhiên vật liệu) được C. Mác gọi là gì? A. Tư bản khả biến (v) B. Tư bản bất biến (c) C. Tư bản giả D. Tư bản cho vay",
-    "Câu 7. Chi phí sản xuất tư bản chủ nghĩa (ký hiệu là k) được tính bằng công thức nào? A. k = c + v + m B. k = c + p C. k = c + v D. k = v + m",
-    "Câu 8. Nhà tư bản sử dụng mấy phương pháp cơ bản để sản xuất giá trị thặng dư? A. 2 (Tuyệt đối và Tương đối) B. 3 (Tuyệt đối, Tương đối, Siêu ngạch) C. 4 D. 5",
-    "Câu 9. Bản chất của lợi nhuận (p) là gì? A. Là chi phí mà nhà tư bản bỏ ra B. Là hình thái biểu hiện của giá trị thặng dư trên bề mặt kinh tế thị trường C. Là do tư bản ứng trước sinh ra D. Là lao động quá khứ của công nhân",
-    "Câu 10. Động lực mạnh nhất thúc đẩy các nhà tư bản ra sức cải tiến kỹ thuật, tăng năng suất lao động là gì? A. Giá trị thặng dư tuyệt đối B. Lợi nhuận bình quân C. Giá trị thặng dư siêu ngạch D. Tỷ suất lợi tức",
+    "Câu 1. Bản chất của tích lũy tư bản là gì? A. Là quá trình tiết kiệm tiền của nhà tư bản. B. Là quá trình biến một phần giá trị thặng dư thành tư bản phụ thêm. C. Là quá trình vay vốn để mở rộng sản xuất. D. Là quá trình bán hàng hóa cao hơn giá trị.",
+    "Câu 2. Nguồn gốc duy nhất của tích lũy tư bản là gì? A. Tiền vốn của nhà tư bản. B. Sự tiết kiệm tiêu dùng. C. Giá trị thặng dư. D. Lao động quá khứ.",
+    "Câu 3. Công thức tính chi phí sản xuất tư bản chủ nghĩa (k) là: A. k = c + m. B. k = v + m. C. k = c + v. D. k = c + v + m.",
+    "Câu 4. Lợi nhuận (p) được Mác định nghĩa là gì? A. Là toàn bộ doanh thu thu được. B. Là hình thái chuyển hóa của giá trị thặng dư. C. Là tiền công của nhà tư bản. D. Là sự chênh lệch giữa cung và cầu.",
+    "Câu 5. Công thức tính tỷ suất lợi nhuận (p') là: A. p' = m / v * 100%. B. p' = p / (c + v) * 100%. C. p' = p / c * 100%. D. p' = m / (c + v + m) * 100%.",
+    "Câu 6. Lợi nhuận bình quân hình thành do: A. Sự cạnh tranh trong nội bộ ngành. B. Sự cạnh tranh giữa các ngành. C. Sự can thiệp của nhà nước. D. Sự thỏa thuận giữa các nhà tư bản.",
+    "Câu 7. Lợi tức (z) là một phần của: A. Chi phí sản xuất. B. Giá trị thặng dư. C. Tiền công. D. Tư bản bất biến.",
+    "Câu 8. Công thức vận động của tư bản cho vay là: A. H - T - H'. B. T - H - T'. C. T - T'. D. H - H'.",
+    "Câu 9. Địa tô tư bản chủ nghĩa (R) là phần giá trị thặng dư còn lại sau khi trừ đi: A. Lợi nhuận độc quyền. B. Lợi nhuận bình quân. C. Lợi tức. D. Chi phí sản xuất.",
+    "Câu 10. Tư bản bất biến (c) bao gồm: A. Máy móc, thiết bị và sức lao động. B. Máy móc, thiết bị, nguyên, nhiên liệu. C. Tiền lương và nguyên liệu. D. Giá trị thặng dư.",
+    "Câu 11. Tư bản khả biến (v) là bộ phận tư bản: A. Không thay đổi về lượng trong quá trình sản xuất. B. Biến đổi về lượng và tăng lên trong quá trình sản xuất. C. Dùng để mua máy móc. D. Chuyển nguyên vẹn vào sản phẩm.",
+    "Câu 12. Cấu tạo hữu cơ của tư bản ký hiệu là: A. m/v. B. c/v. C. p/k. D. c/m.",
+    "Câu 13. Tích tụ tư bản là quá trình tăng quy mô tư bản cá biệt bằng cách: A. Hợp nhất nhiều tư bản nhỏ thành tư bản lớn. B. Tư bản hóa giá trị thặng dư. C. Vay vốn ngân hàng. D. Phát hành cổ phiếu.",
+    "Câu 14. Tập trung tư bản là quá trình tăng quy mô tư bản cá biệt bằng cách: A. Tăng cường bóc lột công nhân. B. Kết hợp nhiều tư bản cá biệt nhỏ thành tư bản lớn. C. Tăng năng suất lao động. D. Tiết kiệm chi phí sản xuất.",
+    "Câu 15. Giá cả sản xuất của hàng hóa bằng: A. c + v + m. B. k + p (lợi nhuận). C. k + p ngang (lợi nhuận bình quân). D. c + v.",
+    "Câu 16. Lợi nhuận thương nghiệp có nguồn gốc từ: A. Việc mua rẻ bán đắt. B. Một phần giá trị thặng dư tạo ra trong sản xuất. C. Sự ưu đãi của nhà nước. D. Tài năng của nhà buôn.",
+    "Câu 17. Tỷ suất lợi tức (z') phụ thuộc vào: A. Tỷ suất giá trị thặng dư. B. Tỷ suất lợi nhuận bình quân và cung - cầu tư bản cho vay. C. Giá trị của đồng tiền. D. Tiền công của công nhân.",
+    "Câu 18. Địa tô chênh lệch I thu được trên loại đất nào? A. Đất tốt, đất trung bình và đất có vị trí thuận lợi. B. Đất xấu nhất. C. Đất đã được đầu tư thêm tư bản. D. Mọi loại đất.",
+    "Câu 19. Địa tô chênh lệch II thu được do: A. Độ màu mỡ tự nhiên của đất. B. Thâm canh, đầu tư thêm tư bản để tăng độ màu mỡ. C. Vị trí gần thị trường. D. Sở hữu tư nhân về đất đai.",
+    "Câu 20. Địa tô tuyệt đối thu được trên: A. Chỉ đất tốt. B. Chỉ đất xấu. C. Mọi loại đất ruộng thuê. D. Chỉ đất có vị trí thuận lợi."
   ],
   medium: [
-    "Câu 11. Lao động cụ thể và lao động trừu tượng tạo ra cái gì cho hàng hóa? A. Lao động cụ thể tạo ra giá trị, lao động trừu tượng tạo ra giá trị sử dụng B. Lao động cụ thể tạo ra giá trị sử dụng, lao động trừu tượng tạo ra giá trị C. Cả hai đều tạo ra giá trị sử dụng D. Cả hai đều tạo ra giá trị thặng dư",
-    "Câu 12. Khi tăng năng suất lao động, lượng giá trị của một đơn vị hàng hóa sẽ thay đổi như thế nào? A. Tăng lên B. Giảm xuống C. Không thay đổi D. Biến động thất thường",
-    "Câu 13. Tỷ suất giá trị thặng dư (m') phản ánh điều gì? A. Quy mô bóc lột của tư bản đối với công nhân làm thuê B. Trình độ (mức độ) khai thác, bóc lột sức lao động làm thuê của nhà tư bản C. Tốc độ chu chuyển của tư bản D. Mức doanh lợi đầu tư của nhà tư bản",
-    "Câu 14. Sự khác biệt cơ bản giữa Tích tụ tư bản và Tập trung tư bản là gì? A. Tích tụ tư bản làm tăng quy mô tư bản cá biệt, tập trung tư bản thì không B. Tập trung tư bản làm tăng quy mô tư bản xã hội, tích tụ tư bản thì không C. Tích tụ tư bản làm tăng quy mô tư bản xã hội, tập trung tư bản không làm tăng quy mô tư bản xã hội D. Cả hai đều không làm tăng quy mô tư bản xã hội",
-    "Câu 15. Giá cả sản xuất của hàng hóa được tính bằng công thức nào khi lợi nhuận chuyển hóa thành lợi nhuận bình quân? A. G = c + v + m B. G = k + m C. G = k + p D. G = c + p",
-    "Câu 16. Chức năng thước đo giá trị của tiền tệ dùng để làm gì? A. Môi giới cho quá trình trao đổi hàng hóa B. Trả nợ, trả tiền mua chịu hàng hóa C. Rút khỏi lưu thông để dự trữ D. Đo lường và biểu hiện giá trị của các hàng hóa khác",
-    "Câu 17. Thời gian chu chuyển của tư bản bao gồm những thời gian nào? A. Thời gian sản xuất và thời gian lưu thông B. Thời gian lao động tất yếu và thời gian lao động thặng dư C. Thời gian khấu hao và thời gian làm việc D. Thời gian mua và thời gian bán",
-    "Câu 18. Nguồn gốc của lợi nhuận thương nghiệp trong nền kinh tế tư bản chủ nghĩa là gì? A. Do thương nhân mua rẻ bán đắt mà có B. Là một phần của giá trị thặng dư mà nhà tư bản sản xuất trả cho nhà tư bản thương nghiệp do đã giúp tiêu thụ hàng hóa C. Là do tư bản thương nghiệp tự sinh ra trong quá trình lưu thông D. Là do sự khan hiếm của hàng hóa trên thị trường",
-    "Câu 19. Cạnh tranh giữa các ngành trong nền kinh tế thị trường dẫn đến hệ quả gì? A. Hình thành giá trị thị trường của hàng hóa B. Hạ thấp giá trị cá biệt của hàng hóa C. Hình thành tỷ suất lợi nhuận bình quân và lợi nhuận bình quân D. Làm độc quyền hoàn toàn biến mất",
-    "Câu 20. Bản chất của lợi tức (z) mà người đi vay trả cho người cho vay là gì? A. Là do tiền nhàn rỗi tự đẻ ra tiền B. Là một phần của giá trị thặng dư mà người đi vay thu được thông qua sử dụng tiền vay C. Là tiền công quản lý của người cho vay D. Là chi phí hao mòn tiền tệ",
+    "Câu 21. Nhân tố nào sau đây KHÔNG ảnh hưởng trực tiếp tới quy mô tích lũy tư bản? A. Trình độ khai thác sức lao động. B. Năng suất lao động xã hội. C. Đại lượng tư bản ứng trước. D. Số lượng hàng hóa tiêu dùng cá nhân của công nhân.",
+    "Câu 22. Hệ quả của tích lũy tư bản đối với cấu tạo hữu cơ (c/v) là gì? A. Làm cấu tạo hữu cơ giảm xuống. B. Làm cấu tạo hữu cơ không đổi. C. Làm cấu tạo hữu cơ có xu hướng tăng lên. D. Làm biến mất tư bản bất biến.",
+    "Câu 23. Sự khác biệt cơ bản giữa tích tụ và tập trung tư bản là: A. Tích tụ làm tăng tư bản xã hội, tập trung chỉ làm phân phối lại tư bản xã hội. B. Tập trung làm tăng tư bản xã hội, tích tụ thì không. C. Cả hai đều không liên quan đến giá trị thặng dư. D. Tích tụ diễn ra nhanh hơn tập trung.",
+    "Câu 24. Bần cùng hóa tương đối giai cấp công nhân biểu hiện ở việc: A. Mức sống của công nhân bị giảm xuống mức tối thiểu. B. Tỷ trọng thu nhập của công nhân trong thu nhập quốc dân giảm so với nhà tư bản. C. Công nhân không có việc làm. D. Giá cả hàng hóa tăng nhanh hơn tiền lương.",
+    "Câu 25. Chi phí sản xuất tư bản chủ nghĩa (k) luôn: A. Lớn hơn giá trị hàng hóa. B. Bằng giá trị hàng hóa. C. Nhỏ hơn giá trị hàng hóa (k < c+v+m). D. Bằng chi phí lao động thực tế.",
+    "Câu 26. Khi m' và v không đổi, nếu tư bản bất biến (c) tăng thì tỷ suất lợi nhuận (p') sẽ: A. Tăng lên. B. Giảm xuống. C. Không đổi. D. Tăng tỷ lệ thuận.",
+    "Câu 27. Tỷ suất lợi nhuận (p') phản ánh: A. Trình độ bóc lột của nhà tư bản đối với công nhân. B. Mức doanh lợi (hiệu quả) của việc đầu tư tư bản. C. Quy mô của giá trị thặng dư. D. Thời gian chu chuyển của tư bản.",
+    "Câu 28. Sự hình thành lợi nhuận bình quân dẫn đến việc hàng hóa được bán theo: A. Giá trị hàng hóa. B. Giá cả sản xuất. C. Giá cả thị trường. D. Chi phí sản xuất.",
+    "Câu 29. Tại sao tư bản cho vay là hàng hóa đặc biệt? A. Vì người bán mất quyền sở hữu. B. Vì sau khi sử dụng, giá trị của nó được bảo tồn và tăng thêm. C. Vì nó có giá trị sử dụng vô hạn. D. Vì nó không có giá cả.",
+    "Câu 30. Ảo tưởng 'tiền đẻ ra tiền' xuất hiện rõ nhất ở hình thái nào? A. Tư bản công nghiệp. B. Tư bản thương nghiệp. C. Tư bản cho vay (T - T'). D. Tư bản nông nghiệp.",
+    "Câu 31. Nguồn gốc của địa tô tuyệt đối là do: A. Độ màu mỡ tự nhiên của đất. B. Cấu tạo hữu cơ trong nông nghiệp thấp hơn trong công nghiệp. C. Vị trí gần nơi tiêu thụ. D. Thâm canh nông nghiệp.",
+    "Câu 32. Giá cả ruộng đất thực chất là: A. Giá trị của đất đai. B. Địa tô được tư bản hóa (so sánh với lãi suất ngân hàng). C. Chi phí khai hoang đất. D. Sự thỏa thuận giữa người mua và người bán.",
+    "Câu 33. Sự khác biệt giữa p và m về mặt chất là: A. p là nội dung, m là hình thức. B. m là nội dung, p là hình thái chuyển hóa che đậy nguồn gốc thực. C. p luôn lớn hơn m. D. p và m hoàn toàn giống nhau.",
+    "Câu 34. Nhân tố nào làm tăng tỷ suất lợi nhuận (p')? A. Tăng cấu tạo hữu cơ của tư bản. B. Tiết kiệm tư bản bất biến. C. Giảm tỷ suất giá trị thặng dư. D. Kéo dài thời gian chu chuyển tư bản.",
+    "Câu 35. Tư bản giả (cổ phiếu, trái phiếu) vận động trên thị trường nào? A. Thị trường hàng hóa. B. Thị trường chứng khoán. C. Thị trường lao động. D. Thị trường bất động sản.",
+    "Câu 36. Nếu một doanh nghiệp có giá trị cá biệt thấp hơn giá trị xã hội, họ sẽ thu được: A. Lợi nhuận bình quân. B. Lợi nhuận siêu ngạch. C. Lợi tức. D. Địa tô.",
+    "Câu 37. Quy mô tích lũy tư bản sẽ tăng khi: A. Giá trị sức lao động tăng. B. Năng suất lao động xã hội tăng. C. Tỷ suất giá trị thặng dư giảm. D. Tiêu dùng cá nhân của nhà tư bản tăng.",
+    "Câu 38. Chi phí sản xuất (k) che đậy nguồn gốc của m vì nó xóa nhòa ranh giới giữa: A. c và v. B. k và p. C. p và m. D. p' và m'.",
+    "Câu 39. Lợi tức (z) luôn phải nhỏ hơn: A. Chi phí sản xuất. B. Lợi nhuận bình quân. C. Tiền vốn cho vay. D. Tiền lương công nhân.",
+    "Câu 40. Sự hình thành lợi nhuận bình quân KHÔNG làm thay đổi: A. Giá cả hàng hóa. B. Tổng giá trị thặng dư trên phạm vi toàn xã hội. C. Tỷ suất lợi nhuận của từng ngành. D. Lợi nhuận cá biệt của từng nhà tư bản."
   ],
   hard: [
-    "Câu 21. Mâu thuẫn giữa lao động cụ thể và lao động trừu tượng xuất hiện khi nào? A. Khi mức hao phí lao động cá biệt thấp hơn mức hao phí lao động xã hội cần thiết B. Khi sản phẩm của người sản xuất riêng biệt không phù hợp với nhu cầu xã hội hoặc hao phí cá biệt cao hơn mức xã hội chấp nhận C. Khi nhà tư bản kéo dài ngày lao động của công nhân D. Khi cấu tạo hữu cơ của tư bản tăng lên",
-    "Câu 22. Khi tăng cường độ lao động, lượng giá trị của một đơn vị hàng hóa sẽ thay đổi như thế nào? A. Giảm xuống vì sản xuất được nhiều hàng hóa hơn B. Tăng lên vì hao phí sức lực nhiều hơn C. Không thay đổi vì lượng thời gian lao động xã hội cần thiết hao phí cho một đơn vị hàng hóa không đổi D. Có thể tăng hoặc giảm tùy vào năng suất",
-    "Câu 23. Chứng khoán, chứng quyền (cổ phiếu, trái phiếu) được C. Mác gọi là loại tư bản gì? A. Tư bản thương nghiệp B. Tư bản ngân hàng C. Tư bản giả D. Tư bản cố định",
-    "Câu 24. Hàng hóa sức lao động có giá trị sử dụng đặc biệt ở chỗ nào? A. Nó có thể được cất trữ và sử dụng nhiều lần B. Trong khi sử dụng nó, nó không những bảo tồn mà còn tạo ra được lượng giá trị mới lớn hơn giá trị bản thân nó C. Nó thỏa mãn nhu cầu tinh thần của nhà tư bản D. Nó không bị hao mòn trong quá trình sản xuất",
-    "Câu 25. Giá trị của hàng hóa sức lao động được đo lường như thế nào? A. Đo lường trực tiếp bằng số giờ công nhân làm việc trong xí nghiệp B. Đo lường gián tiếp thông qua lượng giá trị của các tư liệu sinh hoạt để tái sản xuất ra sức lao động C. Đo lường bằng tổng lượng giá trị thặng dư mà nó tạo ra D. Đo lường bằng năng suất lao động của công nhân",
-    "Câu 26. Tư bản cố định khác với tư bản lưu động ở phương thức chuyển giá trị vào sản phẩm như thế nào? A. Tư bản cố định chuyển một lần toàn phần, tư bản lưu động chuyển dần từng phần B. Tư bản cố định chuyển dần từng phần theo mức độ hao mòn, tư bản lưu động chuyển một lần toàn phần C. Cả hai đều chuyển giá trị một lần toàn phần vào sản phẩm D. Cả hai đều không chuyển giá trị vào sản phẩm mà tự bảo toàn",
-    "Câu 27. Địa tô tuyệt đối mà địa chủ thu được dựa trên cơ sở nào? A. Thu được do cho thuê mảnh đất có độ màu mỡ cao, điều kiện tự nhiên thuận lợi B. Thu được do thâm canh, đầu tư làm tăng độ màu mỡ của đất C. Thu được trên mọi mảnh đất cho thuê, không kể độ màu mỡ tự nhiên hay do thâm canh D. Chỉ thu được ở các khu công nghiệp nông thôn",
-    "Câu 28. Cấu tạo hữu cơ của tư bản (c/v) là gì? A. Là cấu tạo giá trị được quyết định bởi cấu tạo kỹ thuật và phản ánh sự biến đổi của cấu tạo kỹ thuật của tư bản B. Là tỷ lệ giữa lượng công nhân và lượng máy móc C. Là tỷ lệ giữa lợi nhuận và chi phí sản xuất D. Là cấu tạo vật chất của máy móc trong nhà máy",
-    "Câu 29. Sản xuất giá trị thặng dư tương đối được thực hiện thông qua biện pháp cốt lõi nào? A. Kéo dài ngày lao động vượt quá thời gian lao động tất yếu B. Tăng cường độ lao động của công nhân lên mức tối đa C. Rút ngắn thời gian lao động tất yếu bằng cách hạ thấp giá trị sức lao động (nhờ tăng năng suất lao động xã hội) D. Ép công nhân làm việc không có thời gian nghỉ ngơi",
-    "Câu 30. Tiền công trong chủ nghĩa tư bản thực chất là gì? A. Là sự trả công cho toàn bộ lao động của người công nhân trong ngày B. Là giá cả của hàng hóa sức lao động, do hao phí sức lao động của công nhân tự trả cho mình thông qua sổ sách của nhà tư bản C. Là một phần quà tặng của nhà tư bản cho công nhân D. Là chi phí hao mòn máy móc",
+    "Câu 41. Mối quan hệ giữa sự gia tăng cấu tạo hữu cơ (c/v) và tỷ suất lợi nhuận (p') là gì? A. Tỷ lệ thuận. B. c/v tăng làm p' có xu hướng giảm (với m' không đổi). C. Không có mối quan hệ. D. Luôn làm p' tăng.",
+    "Câu 42. Tác động của khấu hao máy móc đối với tích lũy tư bản là gì? A. Khấu hao làm giảm quy mô tích lũy. B. Quỹ khấu hao khi chưa sử dụng có thể trở thành nguồn vốn để mở rộng sản xuất. C. Khấu hao không liên quan đến tích lũy. D. Khấu hao làm tăng giá trị sức lao động.",
+    "Câu 43. Vì sao Mác nói 'Tích lũy tư bản là tích lũy sự giàu sang về một cực và tích lũy sự bần cùng về cực khác'? A. Vì nhà tư bản không trả lương cho công nhân. B. Vì sự gia tăng cấu tạo hữu cơ tạo ra nguy cơ thừa nhân khẩu (thất nghiệp) tương đối. C. Vì công nhân lười lao động. D. Vì máy móc làm việc thay con người hoàn toàn.",
+    "Câu 44. Trong điều kiện hình thành lợi nhuận bình quân, các nhà tư bản ở ngành có cấu tạo hữu cơ THẤP sẽ: A. Thu được lợi nhuận lớn hơn giá trị thặng dư họ tạo ra. B. Phải chuyển một phần m của ngành mình cho các ngành có cấu tạo hữu cơ cao. C. Bị phá sản ngay lập tức. D. Không chịu ảnh hưởng gì.",
+    "Câu 45. Điểm khác biệt về mặt lượng giữa Địa tô chênh lệch II và Địa tô chênh lệch I là: A. Địa tô chênh lệch II luôn nhỏ hơn I. B. Địa tô chênh lệch II gắn liền với kết quả của việc thâm canh. C. Địa tô chênh lệch I thu được do đầu tư tư bản. D. Không có sự khác biệt về lượng.",
+    "Câu 46. Bản chất của 'Chế độ tham dự' của tài phiệt là gì? A. Là việc công nhân tham gia quản lý doanh nghiệp. B. Là việc tài phiệt mua cổ phiếu khống chế để chi phối các công ty mẹ, con, cháu. C. Là việc nhà nước hỗ trợ vốn cho tư nhân. D. Là việc các nước cùng tham gia hội nhập kinh tế.",
+    "Câu 47. Khi năng suất lao động tăng, giá trị thặng dư tương đối tăng là do: A. Ngày lao động kéo dài. B. Giá trị tư liệu sinh hoạt giảm dẫn đến thời gian lao động tất yếu rút ngắn. C. Cường độ lao động tăng. D. Máy móc tạo ra giá trị mới.",
+    "Câu 48. Tại sao p' (tỷ suất lợi nhuận) lại thấp hơn m' (tỷ suất giá trị thặng dư)? A. Vì p' tính trên (c+v), còn m' chỉ tính trên v. B. Vì nhà tư bản phải nộp thuế. C. Vì p luôn nhỏ hơn m. D. Vì chi phí sản xuất quá lớn.",
+    "Câu 49. Sự hình thành giá cả sản xuất (k + p ngang) là hình thái biến tướng của: A. Quy luật cung cầu. B. Quy luật giá trị. C. Quy luật lưu thông tiền tệ. D. Quy luật cạnh tranh tự do.",
+    "Câu 50. Địa tô tuyệt đối tồn tại dựa trên rào cản nào? A. Sự khan hiếm của đất tốt. B. Độc quyền sở hữu tư nhân về đất đai. C. Sự cách xa thị trường. D. Năng suất lao động thấp.",
+    "Câu 51. Tư bản cho vay tạo ra ảo tưởng 'tiền đẻ ra tiền' vì nó đã: A. Loại bỏ khâu lưu thông hàng hóa. B. Che giấu quá trình sản xuất trực tiếp tạo ra m (T - SX - T') chỉ còn lại T - T'. C. Làm tăng giá trị đồng tiền. D. Giúp nhà tư bản giàu nhanh hơn.",
+    "Câu 52. Phân tích nhân tố 'Tiết kiệm tư bản bất biến' giúp nhà tư bản: A. Giảm tiền công công nhân. B. Nâng cao tỷ suất lợi nhuận (p') mà không cần tăng trình độ bóc lột (m'). C. Tăng giá bán hàng hóa. D. Kéo dài ngày lao động.",
+    "Câu 53. Tư bản thương nghiệp thúc đẩy sản xuất phát triển vì nó giúp: A. Nhà tư bản sản xuất không phải thuê công nhân. B. Rút ngắn thời gian lưu thông, đẩy nhanh tốc độ chu chuyển tư bản. C. Tăng giá trị của hàng hóa. D. Loại bỏ sự cạnh tranh.",
+    "Câu 54. Địa tô tư bản khác địa tô phong kiến ở chỗ: A. Địa tô tư bản là toàn bộ sản phẩm thặng dư. B. Địa tô tư bản chỉ là phần giá trị thặng dư siêu ngạch ngoài lợi nhuận bình quân. C. Địa tô phong kiến nhỏ hơn. D. Địa tô tư bản nộp bằng tiền, phong kiến nộp bằng vật.",
+    "Câu 55. Vì sao cấu tạo hữu cơ tăng lại dẫn tới bần cùng hóa tuyệt đối trong thời kỳ khủng hoảng? A. Vì máy móc làm hỏng hàng hóa. B. Vì máy móc thay thế lao động sống làm gia tăng đội quân thất nghiệp, mất hoàn toàn thu nhập. C. Vì nhà tư bản phá sản nên không trả lương. D. Vì nhu cầu tiêu dùng giảm.",
+    "Câu 56. Nếu giá trị thặng dư là m, p là lợi nhuận, trong điều kiện cung = cầu thì: A. p > m. B. p < m. C. p = m. D. p không liên quan đến m.",
+    "Câu 57. Công thức M = m' x V dùng để tính: A. Tỷ suất giá trị thặng dư. B. Khối lượng giá trị thặng dư. C. Quy mô tích lũy. D. Tốc độ chu chuyển tư bản.",
+    "Câu 58. Hao mòn vô hình của tư bản cố định xảy ra khi: A. Máy móc bị gỉ sét do thời tiết. B. Có những máy móc mới hiện đại hơn hoặc rẻ hơn xuất hiện trên thị trường. C. Công nhân làm hỏng máy. D. Máy hết thời hạn sử dụng.",
+    "Câu 59. Tốc độ chu chuyển tư bản (n) tăng lên sẽ làm: A. Tỷ suất giá trị thặng dư m' tăng. B. Tỷ suất lợi nhuận hằng năm tăng. C. Giá trị tư bản cố định tăng. D. Thời gian sản xuất kéo dài.",
+    "Câu 60. Nghĩa hẹp của Kinh tế chính trị theo Ăng-ghen là nghiên cứu: A. Mọi quy luật kinh tế của mọi thời đại. B. Quan hệ sản xuất và trao đổi trong một phương thức sản xuất nhất định. C. Cách thức làm giàu của cá nhân. D. Chính sách kinh tế của nhà nước."
   ],
 };
 
 const QUESTION_EFFECTS = {
-  1: { correct: { amt: "+$5", act: p => p.cash += 5, st: "Hiểu điều kiện thị trường giúp bạn chọn đúng sân chơi." }, incorrect: { amt: "-$5", act: p => p.cash = Math.max(0, p.cash - 5), st: "Mù mờ về thị trường là bước đầu của phá sản." } },
-  2: { correct: { amt: "+$5", act: p => p.cash += 5, st: "Buffett nói: 'Giá là cái bạn trả, giá trị là cái bạn nhận'." }, incorrect: { amt: "-$5", act: p => p.cash = Math.max(0, p.cash - 5), st: "Nhầm lẫn giữa giá cả và giá trị là sai lầm chết người." } },
-  3: { correct: { amt: "+$6", act: p => p.cash += 6, st: "Bạn hiểu thước đo xã hội, không bị ảo tưởng bởi cái nhìn cá nhân." }, incorrect: { amt: "-$4", act: p => p.cash = Math.max(0, p.cash - 4), st: "Dùng thước đo sai sẽ định giá doanh nghiệp sai." } },
-  4: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Công thức T-H-T' chính là nền tảng của mọi đế chế tư bản." }, incorrect: { amt: "-$6", act: p => p.cash = Math.max(0, p.cash - 6), st: "Không hiểu cách tiền sinh ra tiền thì mãi làm thuê." } },
-  5: { correct: { amt: "+$5", act: p => p.cash += 5, st: "Biết 'm' (thặng dư) là mục tiêu của mọi nhà đầu tư." }, incorrect: { amt: "-$3", act: p => p.cash = Math.max(0, p.cash - 3), st: "Không biết lợi nhuận từ đâu thì không thể giữ được tiền." } },
-  6: { correct: { amt: "+$6", act: p => p.cash += 6, st: "Tư bản bất biến (c) là những cỗ máy giúp bạn rảnh tay." }, incorrect: { amt: "-$5", act: p => p.cash = Math.max(0, p.cash - 5), st: "Nhầm lẫn vai trò sản xuất làm rối loạn dòng vốn." } },
-  7: { correct: { amt: "+$7", act: p => p.cash += 7, st: "Kiểm soát chi phí (k) là cách Buffett bảo vệ túi tiền của mình." }, incorrect: { amt: "-$5", act: p => p.cash = Math.max(0, p.cash - 5), st: "Sai số về chi phí khiến lợi nhuận chỉ là con số ảo." } },
-  8: { correct: { amt: "+$6", act: p => p.cash += 6, st: "Hiểu phương pháp tạo thặng dư để tối ưu hóa nguồn lực." }, incorrect: { amt: "-$4", act: p => p.cash = Math.max(0, p.cash - 4), st: "Thiếu chiến lược sản xuất, doanh nghiệp sẽ dậm chân." } },
-  9: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn nhìn thấy thực chất của lợi nhuận sau lớp vỏ thị trường." }, incorrect: { amt: "-$6", act: p => p.cash = Math.max(0, p.cash - 6), st: "Bị đánh lừa bởi bề nổi, bạn sẽ mất tiền vào tay kẻ khác." } },
-  10: { correct: { amt: "+$10", act: p => p.cash += 10, st: "Thặng dư siêu ngạch chính là 'Moat' (Con hào kinh tế)." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Thiếu động lực cạnh tranh, bạn sẽ bị đào thải." } },
-  11: { correct: { amt: "+10% TS", act: p => p.cash += Math.floor(p.cash * 0.1), st: "Hiểu bản chất lao động giúp bạn định giá đúng con người." }, incorrect: { amt: "-10% TS", act: p => p.cash = Math.max(0, p.cash - Math.floor(p.cash * 0.1)), st: "Sai bản chất dẫn đến sai hệ thống tư duy." } },
-  12: { correct: { amt: "+$10", act: p => p.cash += 10, st: "Năng suất tăng, giá trị giảm – Buffett luôn chọn hàng rẻ giá trị cao." }, incorrect: { amt: "-$8", act: p => p.cash = Math.max(0, p.cash - 8), st: "Không hiểu quy luật năng suất sẽ mua đắt bán rẻ." } },
-  13: { correct: { amt: "+$12", act: p => p.cash += 12, st: "Tỷ suất m' cho thấy hiệu suất bóc lột (hiệu suất đầu tư)." }, incorrect: { amt: "-$10", act: p => p.cash = Math.max(0, p.cash - 10), st: "Đánh giá sai hiệu suất, vốn của bạn sẽ bị chôn vùi." } },
-  14: { correct: { amt: "+$15", act: p => p.cash += 15, st: "Tập trung tư bản giúp Berkshire Hathaway thành gã khổng lồ." }, incorrect: { amt: "-$12", act: p => p.cash = Math.max(0, p.cash - 12), st: "Nhầm lẫn quy mô khiến bạn đầu tư dàn trải." } },
-  15: { correct: { amt: "+$15", act: p => p.cash += 15, st: "Giá cả sản xuất là điểm tựa để bạn mua vào khi thị trường hoảng loạn." }, incorrect: { amt: "+$5", act: p => p.cash += 5, st: "Bạn vẫn có lãi nhưng bỏ lỡ cơ hội bứt phá." } },
-  16: { correct: { amt: "+$10", act: p => p.cash += 10, st: "Tiền là thước đo, đừng để cảm xúc làm thước đo thay đổi." }, incorrect: { amt: "-$10", act: p => p.cash = Math.max(0, p.cash - 10), st: "Thước đo sai làm hỏng mọi bảng cân đối kế toán." } },
-  17: { correct: { amt: "+$15", act: p => p.cash += 15, st: "'Thời gian là bạn của doanh nghiệp tuyệt vời' - Chu chuyển nhanh là tốt." }, incorrect: { amt: "-$12", act: p => p.cash = Math.max(0, p.cash - 12), st: "Chôn vốn quá lâu khiến tỷ suất lợi nhuận thảm hại." } },
-  18: { correct: { amt: "+$20", act: p => p.cash += 20, st: "Hiểu nguồn gốc lợi nhuận thương nghiệp để đầu tư vào bán lẻ." }, incorrect: { amt: "-$20", act: p => p.cash = Math.max(0, p.cash - 20), st: "Nghĩ rằng mua rẻ bán đắt là tất cả? Bạn quá ngây thơ." } },
-  19: { correct: { amt: "+$20", act: p => p.cash += 20, st: "Cạnh tranh tạo ra sự bình quân, hãy tìm nơi ít cạnh tranh nhất." }, incorrect: { amt: "+$0", act: p => p.cash += 0, st: "Bạn an toàn, nhưng cơ hội làm giàu đã vụt mất." } },
-  20: { correct: { amt: "+$25", act: p => p.cash += 25, st: "Lợi tức là phần thưởng cho người kiên nhẫn nắm giữ tiền." }, incorrect: { amt: "+$5", act: p => p.cash += 5, st: "Lợi nhuận mỏng manh không đủ bù lạm phát." } },
-  21: { correct: { amt: "+$25", act: p => p.cash += 25, st: "Tránh mâu thuẫn xã hội là cách bảo vệ doanh nghiệp bền vững." }, incorrect: { amt: "-$20", act: p => p.cash = Math.max(0, p.cash - 20), st: "Sản phẩm không phù hợp nhu cầu là rác thải tài chính." } },
-  22: { correct: { amt: "+$30", act: p => p.cash += 30, st: "Cường độ tăng nhưng giá trị đơn vị không đổi – hãy cẩn thận!" }, incorrect: { amt: "-$25", act: p => p.cash = Math.max(0, p.cash - 25), st: "Hiểu sai về giá trị làm bạn kiệt sức mà không giàu." } },
-  23: { correct: { amt: "+$30", act: p => p.cash += 30, st: "Buffett gọi phái sinh là 'vũ khí hủy diệt hàng loạt' (Tư bản giả)." }, incorrect: { amt: "-$25", act: p => p.cash = Math.max(0, p.cash - 25), st: "Say sưa với tư bản giả, bạn sẽ trắng tay khi bong bóng nổ." } },
-  24: { correct: { amt: "+$40", act: p => p.cash += 40, st: "Sức lao động là tài sản duy nhất tạo ra thêm giá trị." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Coi thường con người, hệ thống của bạn sẽ sụp đổ." } },
-  25: { correct: { amt: "+$40", act: p => p.cash += 40, st: "Định giá đúng chi phí tái tạo để giữ chân nhân tài." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Định giá sai con người khiến chi phí ẩn tăng cao." } },
-  26: { correct: { amt: "+$50", act: p => p.cash += 50, st: "Hiểu hao mòn để khấu hao chính xác như một chuyên gia tài chính." }, incorrect: { amt: "-$35", act: p => p.cash = Math.max(0, p.cash - 35), st: "Quản lý tài sản kém làm dòng tiền bị tắc nghẽn." } },
-  27: { correct: { amt: "+$70", act: p => p.cash += 70, st: "Địa tô tuyệt đối là dòng tiền ổn định từ bất động sản." }, incorrect: { amt: "-$50", act: p => p.cash = Math.max(0, p.cash - 50), st: "Đầu tư sai phân khúc đất đai, nợ nần bủa vây." } },
-  28: { correct: { amt: "+$30", act: p => p.cash += 30, st: "Cấu tạo hữu cơ (c/v) tăng là xu thế của AI và tự động hóa." }, incorrect: { amt: "-$25", act: p => p.cash = Math.max(0, p.cash - 25), st: "Lỗi thời về kỹ thuật là dấu chấm hết cho doanh nghiệp." } },
-  29: { correct: { amt: "+$100", act: p => p.cash += 100, st: "Thặng dư tương đối là cách làm giàu bền vững bằng công nghệ." }, incorrect: { amt: "-$50", act: p => p.cash = Math.max(0, p.cash - 50), st: "Chỉ biết ép sức lao động, bạn sẽ sớm bị đối thủ vượt mặt." } },
-  30: { correct: { amt: "x2 Tài sản", act: p => p.cash *= 2, st: "Hiểu bản chất tiền công, bạn đã tốt nghiệp trường đời." }, incorrect: { amt: "-50% TS", act: p => p.cash = Math.max(0, p.cash - Math.floor(p.cash * 0.5)), st: "Một sai lầm ở phút cuối khiến bạn mất trắng thành quả." } }
+  1: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Chuẩn bài. Bạn không để tiền nằm im → bạn bắt nó đi làm việc cho bạn 😎" }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn đang cho tiền ‘nghỉ hưu sớm’. Nó không thích đâu, mà bạn cũng vậy." } },
+  2: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Đúng. Tiền không tự sinh ra – nó phải bị ‘vắt’ ra từ lao động." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn tin tiền tự đẻ? Nghe hơi giống mấy khóa ‘làm giàu nhanh’ rồi đó…" } },
+  3: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn biết doanh nghiệp tốn gì → không bị lừa bởi doanh thu to." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Không biết chi phí mà đi đầu tư thì… hơi liều 😅" } },
+  4: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn nhìn xuyên lớp ‘makeup’ của profit. Rất tỉnh." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn thấy lợi nhuận là tin luôn → doanh nghiệp thích kiểu này lắm." } },
+  5: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn không chỉ hỏi ‘bao nhiêu tiền’ mà hỏi ‘hiệu quả không’ → lên trình rồi." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn chỉ nhìn số tiền, không nhìn tỷ lệ → classic newbie." } },
+  6: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Chuẩn. Thị trường sẽ không cho ai ăn dày mãi đâu." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn nghĩ ngành nào cũng giữ lời riêng? Thị trường không hiền vậy đâu." } },
+  7: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu lãi suất chỉ là ‘chia phần’ thôi, không phải phép màu." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn nghĩ gửi tiền là tiền tự sinh → hơi ảo nha." } },
+  8: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn nhận ra chiêu ‘tiền → tiền’ là illusion. Không dễ bị dụ 👍" }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn rất hợp để bị mời vào mấy kèo ‘lãi 20%/tháng’…" } },
+  9: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu đất không tự kiếm tiền – con người mới làm chuyện đó." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Mua đất vì ‘nó tự tăng’ → nghe quen không? 😏" } },
+  10: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn biết máy móc không tạo giá trị mới. Rất tỉnh táo." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn nghĩ robot tự kiếm tiền? Nếu vậy nó giàu hơn bạn rồi 🤖" } },
+  11: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Chuẩn. Chỉ có lao động sống mới ‘đẻ’ ra giá trị mới." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn đang đánh giá thấp con người rồi đó." } },
+  12: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu cấu trúc doanh nghiệp → đọc số liệu không bị mù." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn nhìn công ty mà không hiểu nó cấu tạo thế nào → hơi mơ hồ." } },
+  13: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu grow từ bên trong → kiểu doanh nghiệp xịn." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn đang nhầm giữa kiếm tiền và đi vay tiền." } },
+  14: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Chuẩn. Đây là kiểu ‘gom hết về một mối’ (M&A)." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn không phân biệt được ‘tự lớn lên’ và ‘đi mua người khác’." } },
+  15: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu giá bán ≠ giá trị. Đây là insight rất ‘đắt tiền’." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn tin giá thị trường luôn đúng? Thị trường cười nhẹ." } },
+  16: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu buôn bán không tạo giá trị mới, chỉ chia lại thôi." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn nghĩ ‘mua rẻ bán đắt’ là tạo ra giá trị? Không hẳn đâu." } },
+  17: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu lãi suất = cung cầu vốn. Chuẩn tài chính cơ bản." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn nghĩ lãi suất tự nhiên mà có? Không đơn giản vậy." } },
+  18: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu đất tốt + vị trí đẹp = tiền. Rất đời." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn không hiểu vì sao cùng ngành mà lời khác nhau." } },
+  19: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu đầu tư thêm → kiếm thêm. Logic đơn giản mà nhiều người quên." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn bỏ qua yếu tố cải tiến → hơi tụt hậu." } },
+  20: { correct: { amt: "+$8", act: p => p.cash += 8, st: "Bạn hiểu quyền sở hữu = quyền kiếm tiền." }, incorrect: { amt: "-$7", act: p => p.cash = Math.max(0, p.cash - 7), st: "Bạn quên mất yếu tố ‘độc quyền’. Sai khá đau." } },
+  21: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn loại được yếu tố ‘rác’. Tư duy analyst chuẩn chỉnh." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn bị nhiễu. Thị trường rất thích người dễ nhiễu." } },
+  22: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn nhìn ra tương lai: máy móc nhiều hơn, con người ít hơn." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn chưa thấy xu hướng automation rồi." } },
+  23: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn phân biệt grow thật vs ‘gom cho to’. Rất đáng tiền." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn thấy to là tưởng mạnh. Không phải lúc nào cũng vậy." } },
+  24: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu bất bình đẳng kiểu hiện đại." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn nghĩ ai cũng giàu lên cùng nhau? Nghe hơi lạc quan 😅" } },
+  25: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu doanh nghiệp luôn phải có ‘margin’ để sống." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn nghĩ bán = chi phí? Vậy họ sống bằng niềm tin à?" } },
+  26: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu càng nhiều máy → lợi nhuận % dễ giảm." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn nghĩ đổ tiền là auto win. Không dễ vậy đâu." } },
+  27: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn đo hiệu quả, không bị doanh thu đánh lừa." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn thấy số to là thích. Nhưng lời bao nhiêu?" } },
+  28: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu giá ≠ giá trị → không FOMO." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn thấy giá tăng là lao vào. Classic." } },
+  29: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu vốn cho vay vẫn ‘sống’. Chuẩn tài chính." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn chưa hiểu dòng tiền vận hành." } },
+  30: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn nhận ra illusion lớn nhất của thị trường." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn tin tiền tự sinh → market thích kiểu này." } },
+  31: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu vì sao nông nghiệp vẫn có ‘đặc quyền’." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn không thấy sự khác biệt giữa ngành." } },
+  32: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu đất = dòng tiền tương lai. Chuẩn investor." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn định giá kiểu ‘cảm giác đẹp là mua’." } },
+  33: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu lợi nhuận chỉ là lớp vỏ. Rất tỉnh." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn bị ‘profit’ đánh lừa." } },
+  34: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn biết tối ưu chi phí > bóc lột thêm. Tư duy hiện đại." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn nghĩ cứ ép là tăng lợi nhuận. Hơi lỗi thời." } },
+  35: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu tài sản giấy vs tài sản thật." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn không phân biệt được cổ phiếu vs tài sản vật lý." } },
+  36: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu ‘lợi thế cạnh tranh’ = tiền thật." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn không biết vì sao có công ty vượt trội." } },
+  37: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu năng suất = tăng trưởng." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn đánh giá sai động lực kinh tế." } },
+  38: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu hệ thống đang ‘giấu bài’." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn nhìn chi phí mà không hiểu sâu." } },
+  39: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu lender không thể ăn hơn owner." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn nghĩ cho vay ngon hơn kinh doanh? Không hẳn." } },
+  40: { correct: { amt: "+$18", act: p => p.cash += 18, st: "Bạn hiểu redistribution ≠ tạo ra giá trị." }, incorrect: { amt: "-$16", act: p => p.cash = Math.max(0, p.cash - 16), st: "Bạn nghĩ tiền tự xuất hiện. Không có đâu." } },
+  41: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu: càng tự động hóa → ROI bị ép. Deep." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn nghĩ công nghệ = auto win. Không phải lúc nào." } },
+  42: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn thấy dòng tiền ẩn. Người ngoài không thấy được." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn bỏ qua cash flow → dễ toang." } },
+  43: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu mặt tối của tăng trưởng." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn đang nhìn kinh tế màu hồng." } },
+  44: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu tiền bị chia lại giữa ngành." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn nghĩ ai làm ra người đó giữ. Không đâu." } },
+  45: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu đầu tư chiều sâu mới là game thật." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn nhầm giữa tự nhiên và đầu tư." } },
+  46: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu quyền lực = sở hữu cổ phần." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn nghĩ CEO là người mạnh nhất? Chưa chắc." } },
+  47: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu tăng năng suất mới là hack game." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn nghĩ ép lao động là cách duy nhất." } },
+  48: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu công thức thật sự đằng sau lợi nhuận." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn đang học công thức mà không hiểu." } },
+  49: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu giá chỉ là phiên bản ‘biến dạng’ của giá trị." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn tin thị trường luôn đúng. Nguy hiểm." } },
+  50: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu độc quyền = tiền." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn bỏ qua yếu tố sở hữu. Sai lớn." } },
+  51: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu tài chính đang ‘che bài’ sản xuất." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn bị illusion dẫn dắt." } },
+  52: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn biết tiết kiệm chi phí = tăng lợi nhuận." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn chỉ nghĩ tăng doanh thu mới là cách." } },
+  53: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu tốc độ lưu thông = tiền." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn không hiểu vì sao Amazon mạnh." } },
+  54: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu evolution của hệ thống kinh tế." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn đang trộn lẫn các thời kỳ." } },
+  55: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu khủng hoảng = mất thu nhập hàng loạt." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn đánh giá sai rủi ro hệ thống." } },
+  56: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu cân bằng thị trường." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn không hiểu mối quan hệ p và m." } },
+  57: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu cách scale lợi nhuận." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn không biết doanh nghiệp lớn lên kiểu gì." } },
+  58: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu disruption. Không ôm đồ lỗi thời." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn đang giữ ‘công nghệ chết’." } },
+  59: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu tốc độ = tiền. Rất quan trọng." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn chậm = mất tiền." } },
+  60: { correct: { amt: "+$38", act: p => p.cash += 38, st: "Bạn hiểu toàn bộ hệ thống. Không còn bị thị trường dắt mũi nữa." }, incorrect: { amt: "-$30", act: p => p.cash = Math.max(0, p.cash - 30), st: "Bạn sai ở nền tảng. Đây là kiểu sai rất đắt." } }
 };
 
 const game = {
@@ -118,6 +154,7 @@ const game = {
   currentTurn: 1,
   pendingDifficulty: null,
   pendingQuestion: null,
+  usedQuestionNumbers: [],
   ended: false,
 };
 
@@ -141,6 +178,20 @@ const feedbackTotal = document.getElementById("feedback-total");
 const nextTurnBtn = document.getElementById("next-turn-btn");
 const finalResultEl = document.getElementById("final-result");
 const difficultyButtons = [...document.querySelectorAll("[data-difficulty]")];
+const bgMusic = document.getElementById("bg-music");
+const musicToggle = document.getElementById("music-toggle");
+
+musicToggle.addEventListener("click", () => {
+  if (bgMusic.paused) {
+    bgMusic.play();
+    musicToggle.textContent = "🎵";
+    musicToggle.classList.remove("muted");
+  } else {
+    bgMusic.pause();
+    musicToggle.textContent = "🔇";
+    musicToggle.classList.add("muted");
+  }
+});
 
 startBtn.addEventListener("click", showInstructions);
 enterGameBtn.addEventListener("click", startGame);
@@ -157,6 +208,11 @@ function showInstructions() {
   setupSection.classList.add("hidden");
   instructionsSection.classList.remove("hidden");
   document.body.classList.add("game-started");
+
+  // Play music on first interaction
+  if (bgMusic && bgMusic.paused) {
+    bgMusic.play().catch((e) => console.log("Audio play blocked"));
+  }
 }
 difficultyButtons.forEach((btn) => btn.addEventListener("click", () => pickDifficulty(btn.dataset.difficulty)));
 
@@ -166,6 +222,7 @@ function startGame() {
   game.currentTurn = 1;
   game.pendingDifficulty = null;
   game.pendingQuestion = null;
+  game.usedQuestionNumbers = [];
   game.ended = false;
 
   setupSection.classList.add("hidden");
@@ -185,7 +242,21 @@ function pickDifficulty(difficulty) {
   game.pendingDifficulty = difficulty;
 
   const player = getCurrentPlayer();
-  const rawQuestion = randomItem(difficultyQuestionSets[difficulty]);
+  
+  // Lọc các câu hỏi chưa dùng
+  const availableQuestions = difficultyQuestionSets[difficulty].filter(q => {
+    const numMatch = q.match(/Câu\s+(\d+)\./);
+    const num = numMatch ? Number(numMatch[1]) : null;
+    return num && !game.usedQuestionNumbers.includes(num);
+  });
+
+  if (availableQuestions.length === 0) {
+    alert("Đã hết câu hỏi mới ở mức độ này! Vui lòng chọn mức khác.");
+    game.pendingDifficulty = null;
+    return;
+  }
+
+  const rawQuestion = randomItem(availableQuestions);
   const parsedQuestion = parseQuestion(rawQuestion);
 
   if (!parsedQuestion || !parsedQuestion.correctAnswer) {
@@ -194,6 +265,7 @@ function pickDifficulty(difficulty) {
     return;
   }
 
+  game.usedQuestionNumbers.push(parsedQuestion.number);
   game.pendingQuestion = parsedQuestion;
   questionTitle.textContent = `${player.name} chọn mức ${difficulty.toUpperCase()}`;
   questionText.textContent = parsedQuestion.questionText;
@@ -217,7 +289,7 @@ function resolveAnswer(selectedOption) {
   let story = "";
   let amountText = "";
   const questionNum = game.pendingQuestion.number;
-  const effectData = QUESTION_EFFECTS[questionNum];
+  const effectData = QUESTION_EFFECTS[questionNum] || QUESTION_EFFECTS[1];
 
   if (isCorrect) {
     const outcome = effectData.correct;
@@ -307,13 +379,26 @@ function getTotalAsset(player) {
 }
 
 function getTitleAndQuote(cash) {
-  if (cash < 50) return { title: "🤡 Cái Bang Công Nghệ", quote: "Vốn 50 đô mà còn lỗ thì tốt nhất bạn nên mang tiền đi gửi tiết kiệm... à mà quên, bạn làm gì còn tiền!" };
-  if (cash < 150) return { title: "🐣 F0 Ngây Thơ", quote: "Cũng có tí kiến thức đấy, nhưng ra thị trường chắc trụ được 5 giây trước khi bị cá mập nó nuốt chửng." };
-  if (cash < 400) return { title: "👔 Chuyên Gia 'Mõm'", quote: "Nói về lý thuyết thì hay lắm, nhưng tài khoản thì vẫn chưa đủ mua cái bánh xe của chiếc Rolls-Royce tôi đang đi." };
-  if (cash < 700) return { title: "🦈 Cá Mập Ao Làng", quote: "Khá đấy! Bạn bắt đầu biết cách 'bóc lột' thặng dư rồi. Đủ tiền mua vài cái thẻ nạp n8n để chạy bot StayJoy rồi đó." };
-  if (cash < 1000) return { title: "👑 Quý Tộc Mới Nổi", quote: "Hơi bị ra gì rồi đấy! Giờ đi đâu cũng có thể vỗ ngực tự xưng là nhà đầu tư chiến lược mà không sợ bị cười vào mặt." };
-  if (cash < 2000) return { title: "💼 Đệ Tử Ruột Buffett", quote: "Chào người anh em! Có muốn ngồi chung xe điện với tôi không? Tầm này thì kiến thức kinh tế của bạn đã thoát xác rồi." };
-  return { title: "🏆 Huyền Thoại Omaha", quote: "Tránh ra cho người giàu đi! Bạn không chỉ hiểu tư bản, bạn chính là tư bản. Giờ thì ngồi xuống và nghe tiền nó tự đẻ ra tiền đi!" };
+  if (cash < 20) return { title: "💀 Bay màu từ vòng gửi xe", quote: "Chưa kịp hiểu đề thì ví đã hiểu bạn rồi 💸" };
+  if (cash < 40) return { title: "🥴 Hơi nghèo nhưng còn thở", quote: "Có tiền… nhưng không đủ để sai thêm nhiều lần." };
+  if (cash < 60) return { title: "🪙 Lẻ tẻ sống qua ngày", quote: "Bạn chưa cháy, nhưng cũng chưa sống nổi 😅" };
+  if (cash < 80) return { title: "🍼 Tập tành kiếm tiền", quote: "Lý thuyết vào đầu, tiền thì vào… người khác." };
+  if (cash < 100) return { title: "🐣 Gà mới ra chuồng", quote: "Bắt đầu hiểu game… và bắt đầu bị thị trường test." };
+  if (cash < 120) return { title: "👟 Chạy KPI tài chính", quote: "Có thu nhập rồi đó, nhưng chưa có ‘tài sản’." };
+  if (cash < 140) return { title: "🧃 Buôn bán nước mía", quote: "Bắt đầu hiểu lời lỗ, nhưng vẫn hơi… thủ công." };
+  if (cash < 160) return { title: "👔 Nhân viên có chí", quote: "Bạn làm tốt… cho người khác giàu." };
+  if (cash < 180) return { title: "🚲 Giao hàng dòng tiền", quote: "Tiền có chạy… nhưng chạy qua tay bạn thôi." };
+  if (cash < 200) return { title: "😬 Hơi biết sợ rủi ro", quote: "Bắt đầu nghĩ trước khi bấm… nhưng vẫn sai 😏" };
+  if (cash < 220) return { title: "🐟 Cá nhỏ biết né lưới", quote: "Không còn dễ bị ăn nữa. Nhưng chưa ăn ai được." };
+  if (cash < 240) return { title: "🧠 Có suy nghĩ tài chính", quote: "Bạn bắt đầu hiểu vấn đề… không còn chơi theo cảm xúc." };
+  if (cash < 260) return { title: "🛠️ Thợ build tài sản", quote: "Bạn đang xây thứ gì đó. Chưa to, nhưng có hướng." };
+  if (cash < 280) return { title: "📊 Phân tích có cơ sở", quote: "Không còn đoán mò. Bạn bắt đầu có logic." };
+  if (cash < 300) return { title: "🌱 Mầm non tư bản", quote: "Tiền bắt đầu sinh tiền… dù còn hơi chậm." };
+  if (cash < 320) return { title: "💼 Người chơi có chiến lược", quote: "Bạn không còn chơi game — bạn đang tối ưu nó." };
+  if (cash < 340) return { title: "🏢 Có tí quyền lực", quote: "Bạn bắt đầu ảnh hưởng cuộc chơi, không chỉ tham gia." };
+  if (cash < 360) return { title: "🔥 Tay chơi có số", quote: "Bạn biết khi nào nên liều. Và thường liều đúng." };
+  if (cash < 380) return { title: "🦈 Cá mập mini", quote: "Bạn bắt đầu săn mồi… chứ không còn bị săn." };
+  return { title: "👑 Ông trùm nửa mùa", quote: "Ở đây bạn là boss. Ra ngoài… vẫn còn boss khác 😏" };
 }
 
 function normalizePlayerState(player) {
